@@ -1,1 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Echoes of Evolution</title>
+    <style>
+        body { margin: 0; background: #1a1a1a; color: white; font-family: sans-serif; overflow: hidden; }
+        canvas { display: block; background: #222; }
+        #hud { 
+            position: absolute; top: 0; left: 0; width: 100%; padding: 10px;
+            display: flex; justify-content: space-between; pointer-events: none;
+            background: rgba(0,0,0,0.5);
+        }
+        .menu-btn { 
+            position: absolute; bottom: 20px; right: 20px; 
+            padding: 15px; background: #e67e22; border: none; border-radius: 50%;
+            color: white; font-weight: bold; cursor: pointer; pointer-events: auto;
+        }
+    </style>
+</head>
+<body>
 
+    <div id="hud">
+        <div>Vida: <span id="hp">100</span></div>
+        <div>Ouro: $<span id="gold">500</span></div>
+        <div>Tempo: <span id="timer">00:30</span></div>
+    </div>
+
+    <button class="menu-btn" onclick="startRound()">START</button>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <script type="module">
+        // Importar as bibliotecas do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // CONFIGURAÇÃO DO FIREBASE (Vais colar os teus dados aqui depois)
+        const firebaseConfig = {
+            apiKey: "AQU_VAI_A_TUA_CHAVE",
+            authDomain: "teu-projeto.firebaseapp.com",
+            projectId: "teu-projeto",
+            storageBucket: "teu-projeto.appspot.com",
+            messagingSenderId: "0000000000",
+            appId: "1:0000000000:web:00000000"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        console.log("Firebase ligado com sucesso!");
+
+        // Lógica inicial do Canvas
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Loop de desenho básico
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#333";
+            ctx.fillText("Motor de Jogo Iniciado - Aguardando Assets Isométricos", 20, canvas.height/2);
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+</body>
+</html>
